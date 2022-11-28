@@ -13,6 +13,7 @@
     const join = require('path').join
     const notifier = require('node-notifier')
     const ContextMenu = require('electron-context-menu')
+    const remoteMain = require('@electron/remote/main')
 
     const app = electron.app
     const AppMenu = electron.Menu
@@ -21,6 +22,9 @@
     const NativeImage = electron.nativeImage
     const BrowserWindow = electron.BrowserWindow
     const globalShortcut = electron.globalShortcut
+    const { webFrame } = require('electron')
+
+    remoteMain.initialize()
 
     const isAlreadyLocked = app.requestSingleInstanceLock()
     app.on('second-instance', (event, argv, workingDir) => {
@@ -176,6 +180,7 @@
                 log.warn("Disabling GPU acceleration")
                 app.disableHardwareAcceleration()
             }
+            webFrame.setZoomFactor(1.1)
         },
 
         applyConfiguration() {
@@ -790,9 +795,11 @@
                     "frame": true,
                     "webPreferences": {
                       "nodeIntegration": true,
+                      "contextIsolation": false
                     }
                 }
             )
+            remoteMain.enable(settings.window.webContents)
 
             settings.window.loadURL("file://" + __dirname + "/html/settings.html")
             settings.window.show()
@@ -827,9 +834,11 @@
                     "frame": true,
                     "webPreferences": {
                       "nodeIntegration": true,
+                      "contextIsolation": false
                     }
                 }
             )
+            remoteMain.enable(about.window.webContents)
 
             about.window.loadURL("file://" + __dirname + "/html/about.html")
             about.window.show()
@@ -924,9 +933,11 @@
                     "frame": true,
                     "webPreferences": {
                       "nodeIntegration": true,
+                      "contextIsolation": false
                     }
                 }
             )
+            remoteMain.enable(phoneinfo.window.webContents)
 
             phoneinfo.window.loadURL("file://" + __dirname + "/html/phoneinfo.html")
             phoneinfo.window.show()

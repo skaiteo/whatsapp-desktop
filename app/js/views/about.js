@@ -1,5 +1,6 @@
-var whatsApp = require('electron').remote.getGlobal("whatsApp");
-var pjson = require('electron').remote.getGlobal('pjson');
+const remote = require('@electron/remote');
+var whatsApp = remote.getGlobal("whatsApp");
+var pjson = remote.getGlobal('pjson');
 
 $(document).ready(() => {
     $("#appversion").html(pjson["version"]);

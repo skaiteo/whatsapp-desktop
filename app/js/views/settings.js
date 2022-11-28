@@ -1,7 +1,8 @@
-var whatsApp = require('electron').remote.getGlobal("whatsApp");
-var settings = require('electron').remote.getGlobal('settings');
-var config = require('electron').remote.getGlobal('config');
-const {dialog} = require('electron').remote;
+const remote = require('@electron/remote');
+var whatsApp = remote.getGlobal("whatsApp");
+var settings = remote.getGlobal('settings');
+var config = remote.getGlobal('config');
+const {dialog} = remote;
 
 var SettingsView = {
     bindEvents() {
